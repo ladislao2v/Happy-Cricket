@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Code.UI
 {
-    public class RecordView : Overlay
+    public class RecordView : Overlay, IRecordView
     {
         [SerializeField] private TextMeshProUGUI _recordText;
 

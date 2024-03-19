@@ -1,4 +1,4 @@
-﻿using Code.Services.Factories.MonoBehaviourFactory;
+﻿using Code.Services.Factories.PoolFactory;
 using Code.Services.Pool;
 using Code.Views.Ball;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace Code.Installers.Local
 
         public override void InstallBindings()
         {
-            var factory = new SimpleFactory<BallView>(Container, _prefab);
+            var factory = new PoolFactory<BallView>(Container, _prefab);
 
             Container
                 .BindInterfacesAndSelfTo<QueuePool<BallView>>()

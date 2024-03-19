@@ -1,20 +1,20 @@
 using System.Collections.Generic;
 using Code.Services.Factories;
-using Code.Services.Factories.MonoBehaviourFactory;
+using Code.Services.Factories.PoolFactory;
 using UnityEngine;
 
 namespace Code.Services.Pool
 {
     public class QueuePool<T> : IPool<T> where T : MonoBehaviour
     {
-        private readonly IFactory<T> _factory;
+        private readonly IPoolFactory<T> _poolFactory;
         private readonly Transform _container;
         private readonly Queue<T> _pool = new();
         private readonly List<T> _activeObjects = new();
 
-        public QueuePool(IFactory<T> factory, Transform container = null, int count = 25)
+        public QueuePool(IPoolFactory<T> poolFactory, Transform container = null, int count = 25)
         {
-            _factory = factory;
+            _poolFactory = poolFactory;
             _container = container;
 
             for(int i = 0; i < count; i++)
@@ -23,7 +23,7 @@ namespace Code.Services.Pool
 
         private T CreateNew(Vector3 position)
         {
-            return _factory.Create(position, _container);
+            return _poolFactory.Create(position, _container);
         }
 
         public T Get(Vector3 position)

@@ -1,12 +1,9 @@
-﻿using System;
-using Code.Services.ScoreService;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace Code.UI
 {
-    public class ScoreView : Overlay
+    public class ScoreView : Overlay, IScoreView
     {
         [SerializeField] private TextMeshProUGUI _scoreText;
 
