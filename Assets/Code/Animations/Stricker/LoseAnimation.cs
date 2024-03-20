@@ -1,5 +1,5 @@
 ﻿using System;
-using Code.Views.Stricker;
+using Code.Views.Players;
 using UnityEngine;
 
 namespace Code.Animations.Stricker

@@ -1,4 +1,4 @@
-﻿using Code.Views.Stricker;
+﻿using Code.Views.Players;
 using UnityEngine;
 
 namespace Code.Effects.Stricker

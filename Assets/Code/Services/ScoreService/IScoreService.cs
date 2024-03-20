@@ -10,5 +10,6 @@ namespace Code.Services.ScoreService
         event Action<int> ScoreChanged;
 
         void Add(int points);
+        void Reset();
     }
 }

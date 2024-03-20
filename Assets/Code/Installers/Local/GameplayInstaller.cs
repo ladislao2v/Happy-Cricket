@@ -1,7 +1,6 @@
 ﻿using Code.Services.InputService;
 using Code.StateMachine.States;
 using Code.Views.Players;
-using Code.Views.Stricker;
 using UnityEngine;
 using Zenject;
 

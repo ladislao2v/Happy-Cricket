@@ -1,7 +1,7 @@
 ﻿using Code.Services.RandomPointsService;
 using Code.Services.ScoreService;
 using Code.UI.Gameplay;
-using Code.Views.Stricker;
+using Code.Views.Players;
 using UnityEngine;
 
 namespace Code.StateMachine.States

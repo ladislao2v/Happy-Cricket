@@ -1,5 +1,4 @@
-﻿using System;
-using Code.Views.Stricker;
+﻿using Code.Services.MovementService;
 using UnityEngine;
 
 namespace Code.Animations.Stricker
@@ -8,7 +7,7 @@ namespace Code.Animations.Stricker
     {
         private static int IsRun = Animator.StringToHash(nameof(IsRun));
         
-        [SerializeField] private StrikerView _strikerView;
+        [SerializeField] private SequenceMovement _strikerView;
         [SerializeField] private Animator _animator;
 
         private void OnEnable()

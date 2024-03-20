@@ -1,9 +1,8 @@
-﻿using Code.Views.Ball;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.Services.OverlapService
 {
-    public class OverlapService : MonoBehaviour
+    public class OverlapService : MonoBehaviour, IOverlapService
     {
         [SerializeField] private Transform _castCenter;
         [SerializeField] private int _radius;

@@ -1,6 +1,5 @@
 ﻿using Code.UI.Gamelose;
 using Code.Views.Players;
-using Code.Views.Stricker;
 
 namespace Code.StateMachine.States
 {

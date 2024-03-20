@@ -3,27 +3,23 @@ using Code.Services.OverlapService;
 using Code.StateMachine;
 using Code.StateMachine.States;
 using Code.Views.Ball;
-using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Views.Stricker
+namespace Code.Views.Players
 {
-    [RequireComponent(typeof(OverlapService))]
     public class StrikerView : MonoBehaviour, IPlayer
     {
-        [SerializeField] private Transform _startPoint;
-        [SerializeField] private Transform _endPoint;
-        [SerializeField] private float _duration = 2f;
-        [SerializeField] private float _rotateTime = 0.25f;
+        [SerializeField] private Transform _head;
         
         private IStateMachine _stateMachine;
-        private OverlapService _overlapService;
-        private Transform _transform;
+        private IOverlapService _overlapService;
+        private IMovementService _movementService;
+        
+        private GameObject _skin;
 
         public event Action Swung;
         public event Action Kicked;
-        public event Action<bool> Runned;
         public event Action Losed;
 
         [Inject]
@@ -34,8 +30,8 @@ namespace Code.Views.Stricker
 
         private void Awake()
         {
-            _overlapService = GetComponent<OverlapService>();
-            _transform = GetComponent<Transform>();
+            _overlapService = GetComponent<IOverlapService>();
+            _movementService = GetComponent<IMovementService>();
         }
 
         public void Swing()
@@ -60,29 +56,19 @@ namespace Code.Views.Stricker
 
         public void Run(int count)
         {
-            Sequence sequence = DOTween.Sequence();
-            
-            sequence.AppendInterval(_rotateTime);
-            sequence.AppendCallback(() => Runned?.Invoke(true));
-            
-
-            for (int i = 0; i < count; i++)
-            {
-                sequence
-                    .Append(_transform.DOMove(_endPoint.position, _duration))
-                    .Append(_transform.DORotate(new Vector3(0, 90, 0), _rotateTime))
-                    .Append(_transform.DOMove(_startPoint.position, _duration))
-                    .Append(_transform.DORotate(new Vector3(0, -90, 0), _rotateTime));
-            }
-
-            sequence
-                .AppendCallback(() => Runned?.Invoke(false))
-                .AppendCallback(() => _stateMachine.Enter<PitcherThrowState>());
+            _movementService.Run(count);
         }
 
         public void Lose()
         {
             Losed?.Invoke();
+        }
+
+        public void SetSkin(GameObject skin)
+        {
+            Destroy(_skin);
+
+            _skin = Instantiate(skin, _head);
         }
     }
 }

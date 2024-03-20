@@ -1,12 +1,14 @@
 ﻿using System;
-using Code.Views.Stricker;
+using Code.Services.MovementService;
+using Code.Views.Players;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Code.Effects.Stricker
 {
     public class RunningEffect : MonoBehaviour
     {
-        [SerializeField] private StrikerView _strikerView;
+        [SerializeField] private SequenceMovement _strikerView;
         [SerializeField] private ParticleSystem _particleSystem;
 
         private void OnEnable()
