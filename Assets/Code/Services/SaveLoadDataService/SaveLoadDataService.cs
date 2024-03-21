@@ -5,6 +5,11 @@ namespace Code.Services.SaveLoadDataService
 {
     public class SaveLoadDataService : ISaveLoadDataService
     {
+        private readonly JsonSerializerSettings _settings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.Auto
+        };
+        
         public void SaveByCustomKey<TSavable>(TSavable data, string key)
         {
             SaveData<TSavable>(key, data);
@@ -27,7 +32,7 @@ namespace Code.Services.SaveLoadDataService
 
         private void SaveData<TSavable>(string key, TSavable data)
         {
-            string json = JsonConvert.SerializeObject(data);
+            string json = JsonConvert.SerializeObject(data, _settings);
             
             PlayerPrefs.SetString(key, json);
             PlayerPrefs.Save();
@@ -39,7 +44,7 @@ namespace Code.Services.SaveLoadDataService
         {
             string json = PlayerPrefs.GetString(key);
 
-            TLoadable loadable = JsonConvert.DeserializeObject<TLoadable>(json);
+            TLoadable loadable = JsonConvert.DeserializeObject<TLoadable>(json, _settings);
 
             if (loadable != null)
                 Debug.Log("Load is done");
