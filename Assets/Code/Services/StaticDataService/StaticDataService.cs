@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Code.Services.AchievementsService;
 using Code.Services.ShopService;
 using Code.Services.StaticDataService.Configs;
 using UnityEngine;
@@ -9,19 +10,28 @@ namespace Code.Services.StaticDataService
 {
     public class StaticDataService : IStaticDataService
     {
-        private const string ChampionshipsPath = "ShopItems";
+        private const string ShopItemsPath = "ShopItems";
+        private const string AchievementsPath = "Achievements";
         
-        private readonly List<IItemConfig> _configs;
+        private readonly List<IItemConfig> _shopItemsConfigs;
+        private readonly List<IAchievementConfig> _achievementsConfigs;
 
-        public StaticDataService() =>
-            _configs = Resources
-                .LoadAll<ItemConfig>(ChampionshipsPath)
+        public StaticDataService()
+        {
+            _shopItemsConfigs = Resources
+                .LoadAll<ItemConfig>(ShopItemsPath)
                 .Cast<IItemConfig>()
                 .ToList();
-
-        public IItemConfig[] GetShopItems()
-        {
-            return _configs.ToArray();
+            _achievementsConfigs = Resources
+                .LoadAll<AchievementConfig>(AchievementsPath)
+                .Cast<IAchievementConfig>()
+                .ToList();
         }
+
+        public IItemConfig[] GetShopItems() => 
+            _shopItemsConfigs.ToArray();
+
+        public IAchievementConfig[] GetAchievements() => 
+            _achievementsConfigs.ToArray();
     }
 }

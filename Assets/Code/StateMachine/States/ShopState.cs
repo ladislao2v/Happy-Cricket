@@ -10,6 +10,7 @@ namespace Code.StateMachine.States
         {
             _shopOverlay = shopOverlay;
         }
+        
         public void Enter()
         {
             _shopOverlay.Load();
