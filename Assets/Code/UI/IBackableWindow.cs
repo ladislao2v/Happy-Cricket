@@ -1,4 +1,4 @@
-namespace Code.UI.DailyReward
+namespace Code.UI
 {
     public interface IBackableWindow
     {
