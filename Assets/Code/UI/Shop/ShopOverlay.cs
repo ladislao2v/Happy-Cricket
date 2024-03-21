@@ -4,24 +4,32 @@ using Code.Services.Factories.ShopItemViewFactory;
 using Code.Services.ShopService;
 using Code.Services.SkinService;
 using Code.Services.WalletService;
+using Code.StateMachine;
+using Code.StateMachine.States;
+using Code.UI.DailyReward;
 using UnityEngine;
 using Zenject;
 
 namespace Code.UI.Shop
 {
-    public class ShopOverlay : Overlay
+    public class ShopOverlay : Overlay, IBackableWindow
     {
+        [SerializeField] private CustomButton _backButton;
+        
         private readonly List<IShopItemView> _shopItems = new();
         
         private IShopService _shopService;
         private IShopItemViewFactory _shopItemViewFactory;
         private ISkinService _skinService;
         private IWalletService _walletService;
+        private IStateMachine _stateMachine;
 
         [Inject]
         private void Construct(IShopService shopService, IWalletService walletService,
-            IShopItemViewFactory shopItemViewFactory, ISkinService skinService)
+            IShopItemViewFactory shopItemViewFactory, ISkinService skinService, 
+            IStateMachine stateMachine)
         {
+            _stateMachine = stateMachine;
             _walletService = walletService;
             _skinService = skinService;
             _shopItemViewFactory = shopItemViewFactory;
@@ -30,6 +38,7 @@ namespace Code.UI.Shop
 
         private void OnEnable()
         {
+            _backButton.Subscribe(OnBackButtonClicked);
             _shopService.Updated += OnUpdate;
 
             foreach (var shopItem in _shopItems)
@@ -43,6 +52,7 @@ namespace Code.UI.Shop
 
         private void OnDisable()
         {
+            _backButton.Unsubscribe(OnBackButtonClicked);
             _shopService.Updated -= OnUpdate;
             
             foreach (var shopItem in _shopItems)
@@ -98,6 +108,11 @@ namespace Code.UI.Shop
                 return;
 
             _skinService.Dress(config.Prefab);
+        }
+
+        public void OnBackButtonClicked()
+        {
+            _stateMachine.Enter<SaveDataState>();
         }
     }
 }

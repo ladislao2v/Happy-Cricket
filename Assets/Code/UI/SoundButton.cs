@@ -20,11 +20,8 @@ namespace Code.UI
         public void TurnOn()
         {
             _toggle.onValueChanged.AddListener(OnToggleClick);
-
-            if (_audioService.IsMute == _toggle.isOn)
-                return;
-
-            _toggle.onValueChanged.Invoke(_audioService.IsMute);
+            
+            _toggle.isOn = _audioService.IsMute;
         }
 
         public void TurnOff()

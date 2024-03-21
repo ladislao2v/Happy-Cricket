@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Code.UI.Shop
+namespace Code.UI
 {
     [RequireComponent(typeof(Button))]
     public class CustomButton : MonoBehaviour
