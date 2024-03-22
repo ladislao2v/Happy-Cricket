@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Sprite>k__BackingField: {fileID: 0}
   <Name>k__BackingField: 
-  <Price>k__BackingField: 0
-  <Prefab>k__BackingField: {fileID: 0}
+  <Price>k__BackingField: 50
+  <Prefab>k__BackingField: {fileID: 6873798246703852702, guid: 5460703e312932a46a57d7ebddf0fbdf, type: 3}
