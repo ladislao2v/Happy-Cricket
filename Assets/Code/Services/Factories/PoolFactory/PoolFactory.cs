@@ -10,7 +10,7 @@ namespace Code.Services.Factories.PoolFactory
         private readonly TItem[] _prefabs;
         private readonly IPauseService _pauseService;
 
-        public PoolFactory(DiContainer diContainer, IPauseService pauseService, params TItem[] prefabs)
+        public PoolFactory(IPauseService pauseService, DiContainer diContainer, TItem[] prefabs)
         {
             _diContainer = diContainer;
             _prefabs = prefabs;

@@ -8,7 +8,8 @@ namespace Code.Installers.Local
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesAndSelfTo<Timer>().AsSingle();
+                .BindInterfacesAndSelfTo<Timer>()
+                .AsSingle();
         }
     }
 }
