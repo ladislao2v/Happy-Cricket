@@ -1,9 +1,10 @@
-﻿using Code.Views.Players;
+﻿using Code.Services.PauseService;
+using Code.Views.Players;
 using UnityEngine.InputSystem;
 
 namespace Code.Services.InputService
 {
-    public interface IInputService
+    public interface IInputService: IPausable 
     {
         void Enable();
         void Disable();
@@ -13,6 +14,7 @@ namespace Code.Services.InputService
     {
         private readonly StrikerView _strikerView;
         private readonly InputMap _inputMap = new();
+        private bool _isPaused;
 
         public InputService(StrikerView strikerView)
         {
@@ -33,7 +35,20 @@ namespace Code.Services.InputService
 
         private void OnClicked(InputAction.CallbackContext obj)
         {
+            if(_isPaused)
+                return;
+
             _strikerView.Swing();
+        }
+
+        public void OnPause()
+        {
+            _isPaused = true;
+        }
+
+        public void OnResume()
+        {
+            _isPaused = false;
         }
     }
 }

@@ -1,16 +1,24 @@
 
+using Code.UI.Settings;
+
 namespace Code.StateMachine.States
 {
     public class SettingsState : IState
     {
+        private readonly SettingsOverlay _settingsOverlay;
+
+        public SettingsState(SettingsOverlay settingsOverlay)
+        {
+            _settingsOverlay = settingsOverlay;
+        }
         public void Enter()
         {
-            throw new System.NotImplementedException();
+            _settingsOverlay.Show();
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+            _settingsOverlay.Hide();
         }
     }
 }

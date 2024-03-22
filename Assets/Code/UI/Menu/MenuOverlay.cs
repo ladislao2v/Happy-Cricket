@@ -3,8 +3,9 @@ using Code.StateMachine.States;
 using System;
 using Code.Services.ScoreService;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Zenject;
+using Button = UnityEngine.UI.Button;
 
 namespace Code.UI.Menu
 {
@@ -36,7 +37,7 @@ namespace Code.UI.Menu
 
         private void OnPlayButtonClicked()
         {
-            _stateMachine.Enter<PitcherThrowState>();
+            _stateMachine.Enter<PreGameState>();
         }
     }
 }

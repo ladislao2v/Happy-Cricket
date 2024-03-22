@@ -1,15 +1,23 @@
+using Code.UI.ClubInformation;
+
 namespace Code.StateMachine.States
 {
     public class ClubInformationState : IState
     {
+        private readonly ClubInformationOverlay _clubInformationOverlay;
+
+        public ClubInformationState(ClubInformationOverlay clubInformationOverlay)
+        {
+            _clubInformationOverlay = clubInformationOverlay;
+        }
         public void Enter()
         {
-            throw new System.NotImplementedException();
+            _clubInformationOverlay.Show();
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+            _clubInformationOverlay.Hide();
         }
     }
 }

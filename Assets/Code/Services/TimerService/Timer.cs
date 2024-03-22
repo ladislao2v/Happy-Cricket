@@ -9,8 +9,6 @@ namespace Code.Services.TimerService
 {
     public class Timer : ITimer, IPausable
     {
-        private int _time = 60;
-
         private bool _isPaused;
         private ICoroutineRunner _coroutineRunner;
 
@@ -23,21 +21,21 @@ namespace Code.Services.TimerService
             _coroutineRunner = coroutineRunner;
         }
         
-        public void Start()
+        public void Start(int time)
         {
-            _coroutineRunner.StartCoroutine(Tick());
+            _coroutineRunner.StartCoroutine(Tick(time));
         }
 
-        private IEnumerator Tick()
+        private IEnumerator Tick(int time)
         {
             float timer = 0f;
             
-            while (timer < _time)
+            while (timer < time)
             {
                 if(_isPaused == false)
                     timer += Time.deltaTime;
                 
-                Ticked?.Invoke(_time - (int)timer);
+                Ticked?.Invoke(time - (int)timer);
                 yield return null;
             }
             

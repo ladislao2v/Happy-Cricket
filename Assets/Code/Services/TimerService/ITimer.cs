@@ -9,6 +9,6 @@ namespace Code.Services.TimerService
         event Action<int> Ticked;
         event Action TimeOut;
 
-        public void Start();
+        public void Start(int time);
     }
 }

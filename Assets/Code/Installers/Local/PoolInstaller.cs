@@ -13,7 +13,7 @@ namespace Code.Installers.Local
 
         public override void InstallBindings()
         {
-            var factory = new PoolFactory<BallView>(Container, _prefab);
+            var factory = new PoolFactory<BallView>(Container, _prefab, TODO);
 
             Container
                 .BindInterfacesAndSelfTo<QueuePool<BallView>>()

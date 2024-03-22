@@ -1,6 +1,8 @@
 ﻿using Code.Services.GameDataService;
+using Code.Services.InputService;
 using Code.Services.PauseService;
 using Code.Services.ScoreService;
+using Code.Services.StatsService;
 using Code.Services.TimerService;
 using Code.Services.WalletService;
 
@@ -13,6 +15,8 @@ namespace Code.StateMachine.States
         private readonly IPauseService _pauseService;
         private readonly IScoreService _scoreService;
         private readonly IWalletService _walletService;
+        private readonly IInputService _inputService;
+        private readonly IStatsService _statsService;
         private readonly ITimer _timer;
 
         public InitialState(IStateMachine stateMachine,
@@ -20,6 +24,8 @@ namespace Code.StateMachine.States
             IPauseService pauseService,
             IScoreService scoreService,
             IWalletService walletService,
+            IInputService inputService,
+            IStatsService statsService,
             ITimer timer)
         {
             _stateMachine = stateMachine;
@@ -27,6 +33,8 @@ namespace Code.StateMachine.States
             _pauseService = pauseService;
             _scoreService = scoreService;
             _walletService = walletService;
+            _inputService = inputService;
+            _statsService = statsService;
             _timer = timer;
         }
 
@@ -40,12 +48,14 @@ namespace Code.StateMachine.States
 
         private void InitializeGameDataService()
         {
+            _gameDataService.Add(_statsService);
             _gameDataService.Add(_walletService);
             _gameDataService.Add(_scoreService);
         }
 
         private void InitializePauseService()
         {
+            _pauseService.Add(_inputService);
             _pauseService.Add(_timer);
         }
 

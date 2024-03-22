@@ -29,7 +29,7 @@ namespace Code.Services.ScoreService
             _walletService.Add(points);
             
             ScoreChanged?.Invoke(_score);
-
+            
             if (_score > Record)
                 Record = _score;
         }
@@ -37,7 +37,7 @@ namespace Code.Services.ScoreService
         public void Reset()
         {
             _score = 0;
-            ScoreChanged?.Invoke(0);
+            ScoreChanged?.Invoke(_score);
         }
 
         public void LoadData(ISaveLoadDataService saveLoadDataService)

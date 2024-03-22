@@ -1,3 +1,4 @@
+using Code.Services.PauseService;
 using UnityEngine;
 using Zenject;
 
@@ -7,11 +8,13 @@ namespace Code.Services.Factories.PoolFactory
     {
         private readonly DiContainer _diContainer;
         private readonly TItem[] _prefabs;
+        private readonly IPauseService _pauseService;
 
-        public PoolFactory(DiContainer diContainer, params TItem[] prefabs)
+        public PoolFactory(DiContainer diContainer, IPauseService pauseService, params TItem[] prefabs)
         {
             _diContainer = diContainer;
             _prefabs = prefabs;
+            _pauseService = pauseService;
         }
 
         public TItem Create(Vector3 position, Transform parent = null)
@@ -20,6 +23,9 @@ namespace Code.Services.Factories.PoolFactory
                 _prefabs[Random.Range(0, _prefabs.Length)],
                 parent
             );
+            
+            if(instance is IPausable pausable)
+                _pauseService.Add(pausable);
 
             return instance;
         }
