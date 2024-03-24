@@ -42,6 +42,8 @@ namespace Code.Views.Ball
 
         public void Return()
         {
+            _startPosition = 
+                new Vector3(_startPosition.x, _startPosition.y + _startPosition.y / 2, _startPosition.z);
             transform.position = _startPosition;
         }
 

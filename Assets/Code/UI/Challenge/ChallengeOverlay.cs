@@ -41,12 +41,15 @@ namespace Code.UI.Challenge
 
         private void OnDied()
         {
+            _recordView.gameObject.SetActive(false);
+            _pauseButton.gameObject.SetActive(false);
             _challengeBallView.Stop();
+            _loseView.Show();
         }
 
         private void OnDisable()
         {
-            _healthService.HealthChanged += _healthView.OnHealthChanged;
+            _healthService.HealthChanged -= _healthView.OnHealthChanged;
             _scoreService.ScoreChanged -= OnScoreChanged;
             _pauseButton.Unsubscribe(OnPause);
             _pauseView.Unsubscribe(OnResume);

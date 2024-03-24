@@ -3870,8 +3870,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hearts:
-  - {fileID: 1639652740}
   - {fileID: 1313222291}
+  - {fileID: 1639652740}
   - {fileID: 2054673499}
 --- !u!1 &403286961
 GameObject:
@@ -4837,7 +4837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _recordView: {fileID: 261623164}
   _pauseView: {fileID: 1518358241}
-  _loseView: {fileID: 0}
+  _loseView: {fileID: 1319312951}
   _pauseButton: {fileID: 1561134749}
   _healthView: {fileID: 402412000}
   _challengeBallView: {fileID: 1044375904}
@@ -10009,9 +10009,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &1044375906
 CircleCollider2D:
