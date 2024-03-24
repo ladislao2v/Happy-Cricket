@@ -1,7 +1,9 @@
-﻿using Code.Services.GameDataService;
+﻿using Code.Services.ClubService;
+using Code.Services.GameDataService;
 using Code.Services.InputService;
 using Code.Services.PauseService;
 using Code.Services.ScoreService;
+using Code.Services.SkinService;
 using Code.Services.StatsService;
 using Code.Services.TimerService;
 using Code.Services.WalletService;
@@ -17,6 +19,8 @@ namespace Code.StateMachine.States
         private readonly IWalletService _walletService;
         private readonly IInputService _inputService;
         private readonly IStatsService _statsService;
+        private readonly IClubService _clubService;
+        private readonly ISkinService _skinService;
         private readonly ITimer _timer;
 
         public InitialState(IStateMachine stateMachine,
@@ -26,6 +30,8 @@ namespace Code.StateMachine.States
             IWalletService walletService,
             IInputService inputService,
             IStatsService statsService,
+            IClubService clubService,
+            ISkinService skinService,
             ITimer timer)
         {
             _stateMachine = stateMachine;
@@ -35,6 +41,8 @@ namespace Code.StateMachine.States
             _walletService = walletService;
             _inputService = inputService;
             _statsService = statsService;
+            _clubService = clubService;
+            _skinService = skinService;
             _timer = timer;
         }
 
@@ -50,6 +58,8 @@ namespace Code.StateMachine.States
         {
             _gameDataService.Add(_statsService);
             _gameDataService.Add(_walletService);
+            _gameDataService.Add(_clubService);
+            _gameDataService.Add(_skinService);
             _gameDataService.Add(_scoreService);
         }
 

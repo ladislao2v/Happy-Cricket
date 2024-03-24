@@ -10,6 +10,7 @@ namespace Code.Installers.Global
         private void BindService() =>
             Container
                 .BindInterfacesAndSelfTo<AchievementsService>()
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
     }
 }

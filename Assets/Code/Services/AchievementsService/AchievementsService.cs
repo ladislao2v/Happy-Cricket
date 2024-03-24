@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Code.Services.SaveLoadDataService;
 using Code.Services.StaticDataService;
+using UnityEngine;
 
 namespace Code.Services.AchievementsService
 {
@@ -15,7 +16,7 @@ namespace Code.Services.AchievementsService
         public AchievementsService(IStaticDataService staticDataService) => 
             _achievements = staticDataService.GetAchievements();
 
-        public void OnScoreChanged(int score)
+        public void Load(int score)
         {
             foreach (IAchievementConfig achievementConfig in _achievements)
             {

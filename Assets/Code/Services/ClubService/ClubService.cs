@@ -4,22 +4,30 @@ namespace Code.Services.ClubService
 {
     public class ClubService : IClubService
     {
-        public IClubData ClubData { get; private set; }
+        public ClubData ClubData { get; private set; }
+        public bool IsCreated { get; private set; }
 
-        public void CreateClub(IClubData clubData)
+        public void CreateClub(ClubData clubData)
         {
             ClubData = clubData;
+            IsCreated = true;
         }
 
         public void LoadData(ISaveLoadDataService saveLoadDataService)
         {
-            var clubData = 
-                saveLoadDataService.LoadByCustomKey<IClubData>(nameof(ClubData));
+            ClubData = 
+                saveLoadDataService.LoadByCustomKey<ClubData>(nameof(ClubData));
+            
+            IsCreated = 
+                saveLoadDataService
+                    .LoadByCustomKey<bool?>(nameof(IsCreated))
+                    .GetValueOrDefault();
         }
 
         public void SaveData(ISaveLoadDataService saveLoadDataService)
         {
             saveLoadDataService.SaveByCustomKey(ClubData, nameof(ClubData));
+            saveLoadDataService.SaveByCustomKey((bool?)IsCreated, nameof(IsCreated));
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Code.Services.SaveLoadDataService
     {
         private readonly JsonSerializerSettings _settings = new JsonSerializerSettings()
         {
-            TypeNameHandling = TypeNameHandling.Auto
+            TypeNameHandling = TypeNameHandling.All
         };
         
         public void SaveByCustomKey<TSavable>(TSavable data, string key)

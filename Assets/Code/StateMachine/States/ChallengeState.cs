@@ -1,24 +1,26 @@
-﻿using Code.UI.Gameplay;
+﻿using Code.UI.Challenge;
+using UnityEditorInternal;
+using UnityEngine.UIElements;
 
 namespace Code.StateMachine.States
 {
     public class ChallengeState : IState
     {
-        private readonly GameplayOverlay _gameplayOverlay;
+        private readonly ChallengeOverlay _challengeOverlay;
 
-        public ChallengeState(GameplayOverlay gameplayOverlay)
+        public ChallengeState(ChallengeOverlay challengeOverlay)
         {
-            _gameplayOverlay = gameplayOverlay;
+            _challengeOverlay = challengeOverlay;
         }
         
         public void Enter()
         {
-            _gameplayOverlay.Show();
+            _challengeOverlay.Show();
         }
 
         public void Exit()
         {
-            _gameplayOverlay.Hide();
+            _challengeOverlay.Hide();
         }
     }
 }

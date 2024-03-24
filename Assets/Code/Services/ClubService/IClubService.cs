@@ -4,7 +4,8 @@ namespace Code.Services.ClubService
 {
     public interface IClubService: ILoadable, ISavable
     {
-        IClubData ClubData { get; }
-        void CreateClub(IClubData clubData);
+        ClubData ClubData { get; }
+        bool IsCreated { get; }
+        void CreateClub(ClubData clubData);
     }
 }

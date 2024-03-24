@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Net.Mail;
 using Code.Services.OverlapService;
+using Code.Services.ScoreService;
+using Code.Services.StatsService;
 using Code.StateMachine;
 using Code.StateMachine.States;
 using Code.Views.Ball;
@@ -17,14 +20,18 @@ namespace Code.Views.Players
         private IMovementService _movementService;
         
         private GameObject _skin;
+        private IScoreService _scoreService;
+        private IStatsService _statsService;
 
         public event Action Swung;
         public event Action Kicked;
         public event Action Losed;
 
         [Inject]
-        private void Construct(IStateMachine stateMachine)
+        private void Construct(IStateMachine stateMachine, IScoreService scoreService, IStatsService statsService)
         {
+            _statsService = statsService;
+            _scoreService = scoreService;
             _stateMachine = stateMachine;
         }
 
@@ -51,13 +58,21 @@ namespace Code.Views.Players
                 _stateMachine.Enter<ChangePositionState>();
                 
                 Kicked?.Invoke();
+                _statsService.AddHitCount();
             }
         }
 
         public void Run(int count)
         {
-            _movementService.Run(count);
+            _movementService.Run(count, OnRun);
         }
+
+        public void OnRun()
+        {
+            if (_scoreService.CurrentThrow != 3 && _scoreService.CurrentThrow != 6)
+                _stateMachine.Enter<PitcherThrowState>();
+        }
+
 
         public void Lose()
         {

@@ -1,4 +1,5 @@
-﻿using Code.Services.PauseService;
+﻿using System;
+using Code.Services.PauseService;
 using UnityEngine;
 
 namespace Code.Views.Ball
@@ -9,15 +10,23 @@ namespace Code.Views.Ball
         
         private Rigidbody2D _rigidbody;
         private Vector2 _lastVelocity;
+        private Vector3 _startPosition;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidbody.gravityScale = 0;
+            _startPosition = transform.position;
         }
 
         public void Fly(Vector3 direction)
         {
             _rigidbody.AddForce(direction * _force);
+        }
+
+        public void Throw()
+        {
+            _rigidbody.gravityScale = 100;
         }
 
         public void OnPause()
@@ -29,6 +38,16 @@ namespace Code.Views.Ball
         public void OnResume()
         {
             _rigidbody.velocity = _lastVelocity;
+        }
+
+        public void Return()
+        {
+            transform.position = _startPosition;
+        }
+
+        public void Stop()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Code.Services.StaticDataService.Configs
         string Name { get; }
         GameObject Prefab { get; }
         int Price { get; }
+        Sprite Background { get; }
     }
 }

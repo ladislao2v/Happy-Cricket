@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,14 +8,24 @@ namespace Code.UI.ClubCreation
     {
         [SerializeField] private Image _selectedIconView;
         [SerializeField] private List<IconCellView> _icons;
+        [SerializeField] private List<Sprite> _sprites;
 
-        public Sprite SelectedIcon { get; private set; }
+        public int SelectedIcon { get; private set; }
+
+        public void Construct(int index)
+        {
+            _selectedIconView.sprite = _sprites[index];
+        }
 
         public void Show()
         {
+            int i = 0;
+            _icons.ForEach(x => x.SetIndex(i++));
+            
             foreach (var iconCellView in _icons)
             {
-                iconCellView.Subscribe(OnCellIconClicked);
+                iconCellView.gameObject.SetActive(true);
+                iconCellView.Clicked += (OnCellIconClicked);
             }
         }
 
@@ -24,40 +33,15 @@ namespace Code.UI.ClubCreation
         {
             foreach (var iconCellView in _icons)
             {
-                iconCellView.Unsubscribe(OnCellIconClicked);
+                iconCellView.gameObject.SetActive(false);
+                iconCellView.Clicked -= (OnCellIconClicked);
             }
         }
 
-        private void OnCellIconClicked(Sprite sprite)
+        private void OnCellIconClicked(int index)
         {
-            SelectedIcon = sprite;
-            _selectedIconView.sprite = sprite;
-        }
-    }
-
-    public class IconCellView : MonoBehaviour
-    {
-        [SerializeField] private Image _image;
-        [SerializeField] private CustomButton _customButton;
-
-        public event Action<Sprite> Clicked;
-
-        public void Subscribe(Action<Sprite> action)
-        {
-            _customButton.Subscribe(OnButtonClicked);
-            Clicked += action;
-        }
-
-        public void Unsubscribe(Action<Sprite> action)
-        {
-            _customButton.Unsubscribe(OnButtonClicked);
-            Clicked -= action;
-        }
-
-        private void OnButtonClicked()
-        {
-            
-            Clicked?.Invoke(_image.sprite);
+            SelectedIcon = index;
+            _selectedIconView.sprite = _sprites[index];
         }
     }
 }

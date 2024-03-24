@@ -8,6 +8,7 @@ namespace Code.UI
     public class SoundButton : MonoBehaviour
     {
         [SerializeField] private Toggle _toggle;
+        [SerializeField] private Image _indicator;
         
         private IAudioService _audioService;
 
@@ -31,10 +32,14 @@ namespace Code.UI
 
         private void OnToggleClick(bool isActive)
         {
-            if(isActive == false)
+            if (isActive == false)
+            {
                 _audioService.Enable();
+            }
             else
+            {
                 _audioService.Disable();
+            }
         }
     }
 }

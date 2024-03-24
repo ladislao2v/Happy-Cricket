@@ -1,4 +1,6 @@
 ﻿using Code.Services.ScoreService;
+using Code.Services.StatsService;
+using Code.Services.WalletService;
 using Code.StateMachine;
 using Code.StateMachine.States;
 using UnityEngine;
@@ -9,28 +11,50 @@ namespace Code.UI.Gamelose
 {
     public class GameloseOverlay : Overlay
     {
+        [SerializeField] private WalletView _walletView;
         [SerializeField] private RecordView _recordView;
-        [SerializeField] private Button _restartButton;
-        
+        [SerializeField] private CustomButton _homeButton;
+        [SerializeField] private GameObject _win;
+        [SerializeField] private GameObject _lose;
+
         private IStateMachine _stateMachine;
         private IScoreService _scoreService;
+        private IWalletService _walletService;
+        private IStatsService _statsService;
 
         [Inject]
-        private void Construct(IStateMachine stateMachine, IScoreService scoreService)
+        private void Construct(IStateMachine stateMachine, IScoreService scoreService, IWalletService walletService,
+        IStatsService statsService)
         {
+            _statsService = statsService;
+            _walletService = walletService;
             _scoreService = scoreService;
             _stateMachine = stateMachine;
         }
 
         private void OnEnable()
         {
-            _restartButton.onClick.AddListener(OnRestartButtonClicked);
+            _homeButton.Subscribe(OnRestartButtonClicked);
+            _walletService.MoneyChanged += _walletView.OnMoneyChanged;
+
+            if (_scoreService.IsWin)
+            {
+                _win.SetActive(true);
+                _statsService.AddMatchWin();
+            }
+            else
+            {
+                _lose.SetActive(true);
+            }
+            
+            _walletService.Add(_scoreService.Score);
             _recordView.Render(_scoreService.Record);
         }
 
         private void OnDisable()
         {
-            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+            _homeButton.Unsubscribe(OnRestartButtonClicked);
+            _walletService.MoneyChanged += _walletView.OnMoneyChanged;
         }
 
         private void OnRestartButtonClicked()

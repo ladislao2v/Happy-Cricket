@@ -8,15 +8,11 @@ namespace Code.UI.Shop
 {
     public class ShopItemView : Overlay, IShopItemView
     {
-        [SerializeField] private TextMeshProUGUI _nameText;
-        [SerializeField] private TextMeshProUGUI _priceText;
-        [SerializeField] private Image _logo;
+        [SerializeField] private Image _backgroundImage;
+        [SerializeField] private Image _image;
         [SerializeField] private CustomButton _buyButton;
-        [SerializeField] private CustomButton _dressButton;
-        [SerializeField] private Sprite _activeBackground;
-        [SerializeField] private Sprite _passiveBackground;
         
-        private Image _backgroundImage;
+        private bool _isLock;
 
         public IItemConfig Config { get; private set; }
 
@@ -26,51 +22,41 @@ namespace Code.UI.Shop
         public void Construct(IItemConfig config, bool isLock)
         {
             Config = config;
-
-            _nameText.text = Config.Name;
-            _priceText.text = $"{Config.Price}";
-            _logo.sprite = Config.Sprite;
-
-            if (isLock)
-            {
-                _buyButton.gameObject.SetActive(false);
-                _dressButton.gameObject.SetActive(true);
-            }
-        }
-
-        private void Awake()
-        {
-            _backgroundImage = GetComponent<Image>();
+            
+            _backgroundImage.sprite = config.Background;
+            _image.sprite = config.Sprite;
+            _isLock = isLock;
         }
         
         public void MakeActive()
         {
-            _buyButton.gameObject.SetActive(true);
-            _backgroundImage.sprite = _activeBackground;
+            _image.gameObject.SetActive(false);
         }
 
         public void MakePassive()
         {
-            _buyButton.gameObject.SetActive(false);
-            _backgroundImage.sprite = _passiveBackground;
+            _image.gameObject.SetActive(true);
         }
 
         private void OnEnable()
         {
             _buyButton.Subscribe(OnBuyButtonClicked);
-            _dressButton.Subscribe(OnDressButtonClicked);
         }
 
         public void OnDisable()
         {
             _buyButton.Unsubscribe(OnBuyButtonClicked);
-            _dressButton.Unsubscribe(OnDressButtonClicked);
         }
 
-        private void OnDressButtonClicked() => 
-            DressButtonClicked?.Invoke(Config.Prefab);
-
-        private void OnBuyButtonClicked() => 
+        private void OnBuyButtonClicked()
+        {
+            if (_isLock)
+            {
+                DressButtonClicked?.Invoke(Config.Prefab);
+                return;
+            }
+            
             BuyButtonClicked?.Invoke(this);
+        }
     }
 }

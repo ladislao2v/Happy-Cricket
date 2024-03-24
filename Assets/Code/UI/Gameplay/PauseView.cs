@@ -9,7 +9,6 @@ namespace Code.UI.Gameplay
     public class PauseView : MonoBehaviour
     {
         [SerializeField] private CustomButton _resumeButton;
-        [SerializeField] private CustomButton _restartButton;
         [SerializeField] private CustomButton _homeButton;
         
         private IStateMachine _stateMachine;
@@ -35,25 +34,19 @@ namespace Code.UI.Gameplay
         public void Show()
         {
             gameObject.SetActive(true);
-            _restartButton.Subscribe(OnRestartClicked);
             _homeButton.Subscribe(OnHomeClicked);
         }
 
         public void Hide()
         {
             gameObject.SetActive(false);
-            _restartButton.Unsubscribe(OnRestartClicked);
             _homeButton.Unsubscribe(OnHomeClicked);
         }
 
         private void OnHomeClicked()
         {
+            Time.timeScale = 1;
             _stateMachine.Enter<SaveDataState>();
-        }
-
-        private void OnRestartClicked()
-        {
-            _stateMachine.Enter<PreGameState>();
         }
     }
 }

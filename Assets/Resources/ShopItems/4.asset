@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5280562fa2bc40c9a1dfe0aa7a23903c, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: c9ea3f5303b4d244e9450c00165ab87e, type: 3}
   <Name>k__BackingField: 
-  <Price>k__BackingField: 10
+  <Price>k__BackingField: 100
+  <Background>k__BackingField: {fileID: 21300000, guid: 60e713b84ab7ed3489d4d4211fb9e404, type: 3}
   <Prefab>k__BackingField: {fileID: 8628932228240381488, guid: 7a7ef40e2e9f178488f8e4d2092c6e04, type: 3}

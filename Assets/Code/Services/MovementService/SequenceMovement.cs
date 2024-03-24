@@ -16,22 +16,15 @@ namespace Code.Services.MovementService
         [SerializeField] private float _rotateTime = 0.35f;
 
         private Transform _transform;
-        private IStateMachine _stateMachine;
 
         public event Action<bool> Runned;
-
-        [Inject]
-        private void Construct(IStateMachine stateMachine)
-        {
-            _stateMachine = stateMachine;
-        }
 
         private void Awake()
         {
             _transform = GetComponent<Transform>();
         }
 
-        public void Run(int count)
+        public void Run(int count, Action onRun)
         {
             Sequence sequence = DOTween.Sequence();
             
@@ -49,8 +42,9 @@ namespace Code.Services.MovementService
             }
 
             sequence
-                .AppendCallback(() => Runned?.Invoke(false))
-                .AppendCallback(() => _stateMachine.Enter<PitcherThrowState>());
+                .AppendCallback(() => Runned?.Invoke(false));
+            
+            sequence.AppendCallback(() => onRun?.Invoke());
         }
     }
 }

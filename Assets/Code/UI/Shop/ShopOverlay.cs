@@ -14,7 +14,9 @@ namespace Code.UI.Shop
 {
     public class ShopOverlay : Overlay, IBackableWindow
     {
+        [SerializeField] private WalletView _walletView;
         [SerializeField] private CustomButton _backButton;
+        [SerializeField] private Transform _container;
         
         private readonly List<IShopItemView> _shopItems = new();
         
@@ -48,6 +50,11 @@ namespace Code.UI.Shop
             }
             
             _walletService.MoneyChanged += OnMoneyChanged;
+            _walletService.MoneyChanged += _walletView.OnMoneyChanged;
+            
+            OnMoneyChanged(_walletService.Value);
+            
+            _walletView.OnMoneyChanged(_walletService.Value);
         }
 
         private void OnDisable()
@@ -62,6 +69,8 @@ namespace Code.UI.Shop
             }
             
             _walletService.MoneyChanged -= OnMoneyChanged;
+            _walletService.MoneyChanged -= _walletView.OnMoneyChanged;
+            _walletView.OnMoneyChanged(_walletService.Value);
         }
 
         private void OnMoneyChanged(int value)
@@ -85,7 +94,7 @@ namespace Code.UI.Shop
         public void Load()
         {
             foreach (var pair in _shopService.Items)
-                _shopItems.Add(_shopItemViewFactory.Create(pair.Key, pair.Value, transform));
+                _shopItems.Add(_shopItemViewFactory.Create(pair.Key, pair.Value, _container));
         }
 
         private void OnUpdate()

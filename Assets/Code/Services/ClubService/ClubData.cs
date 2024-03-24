@@ -4,14 +4,14 @@ using UnityEngine;
 namespace Code.Services.ClubService
 {
     [Serializable]
-    public class ClubData : IClubData
+    public class ClubData
     {
-        public Sprite Logo { get; }
+        public int IndexLogo { get; }
         public string Name { get; }
 
-        public ClubData(Sprite logo, string name)
+        public ClubData(int indexLogo, string name)
         {
-            Logo = logo;
+            IndexLogo = indexLogo;
             Name = name;
         }
     }

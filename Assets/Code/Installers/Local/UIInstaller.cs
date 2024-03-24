@@ -1,7 +1,6 @@
-﻿using Code.StateMachine.States;
-using Code.UI.Achievements;
+﻿using Code.UI.Achievements;
+using Code.UI.Challenge;
 using Code.UI.ClubCreation;
-using Code.UI.ClubInformation;
 using Code.UI.DailyReward;
 using Code.UI.Gamelose;
 using Code.UI.Gameplay;
@@ -9,6 +8,7 @@ using Code.UI.Menu;
 using Code.UI.Settings;
 using Code.UI.Shop;
 using Code.UI.StatsInformation;
+using Code.UI.Timer;
 using UnityEngine;
 using Zenject;
 
@@ -24,8 +24,9 @@ namespace Code.Installers.Local
         [SerializeField] private StatsOverlay _statsOverlay;
         [SerializeField] private AchievementsOverlay _achievementsOverlay;
         [SerializeField] private ClubCreationOverlay _clubCreationOverlay;
-        [SerializeField] private ClubInformationOverlay _clubInformationOverlay;
         [SerializeField] private DailyRewardsOverlay _dailyRewardOverlay;
+        [SerializeField] private TimerOverlay _timerOverlay;
+        [SerializeField] private ChallengeOverlay _challengeOverlay;
 
         public override void InstallBindings()
         {
@@ -38,7 +39,8 @@ namespace Code.Installers.Local
             BindStatsOverlay();
             BindDailyRewardOverlay();
             BindClubCreationOverlay();
-            BindClubInformationOverlay();
+            BindTimerOverlay();
+            BindChallengeOverlay();
         }
 
         private void BindGameloseOverlay()=>
@@ -83,12 +85,6 @@ namespace Code.Installers.Local
                 .FromInstance(_clubCreationOverlay)
                 .AsSingle();
         
-        private void BindClubInformationOverlay() =>
-            Container
-                .Bind<ClubInformationOverlay>()
-                .FromInstance(_clubInformationOverlay)
-                .AsSingle();
-
         private void BindAchievementsOverlay() =>
             Container
                 .Bind<AchievementsOverlay>()
@@ -99,6 +95,18 @@ namespace Code.Installers.Local
             Container
                 .Bind<DailyRewardsOverlay>()
                 .FromInstance(_dailyRewardOverlay)
+                .AsSingle();
+        
+        private void BindTimerOverlay() =>
+            Container
+                .Bind<TimerOverlay>()
+                .FromInstance(_timerOverlay)
+                .AsSingle();
+        
+        private void BindChallengeOverlay() =>
+            Container
+                .Bind<ChallengeOverlay>()
+                .FromInstance(_challengeOverlay)
                 .AsSingle();
     }
 }

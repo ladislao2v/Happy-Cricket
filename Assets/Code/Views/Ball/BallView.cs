@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Code.Views.Ball
 {
-    public class BallView : MonoBehaviour, IBallView, IPausable
+    public class BallView : MonoBehaviour, IBallView
     {
         [SerializeField] private float _speed = 5f;
         [SerializeField] private ForceMode _forceMode = ForceMode.Impulse;
@@ -43,17 +43,6 @@ namespace Code.Views.Ball
             yield return _delay;
             
             gameObject?.SetActive(false);
-        }
-
-        public void OnPause()
-        {
-            _lastVelocity = _rigidbody.velocity;
-            _rigidbody.velocity = Vector3.zero;
-        }
-
-        public void OnResume()
-        {
-            _rigidbody.velocity = _lastVelocity;
         }
     }
 }

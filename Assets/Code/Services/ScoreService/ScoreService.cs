@@ -1,7 +1,6 @@
 ﻿using System;
 using Code.Services.SaveLoadDataService;
 using Code.Services.WalletService;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace Code.Services.ScoreService
 {
@@ -10,10 +9,14 @@ namespace Code.Services.ScoreService
         private readonly IWalletService _walletService;
         
         private int _score;
-        
+
+        public int CurrentThrow { get; private set; } = 0;
+        public int Score => _score;
+        public int TargetScore { get; private set; }
         public int Record { get; private set; }
-        
-        public event Action<int> ScoreChanged;
+        public bool IsWin => _score >= TargetScore;
+
+        public event Action<int, int> ScoreChanged;
 
         public ScoreService(IWalletService walletService)
         {
@@ -28,16 +31,27 @@ namespace Code.Services.ScoreService
             _score += points;
             _walletService.Add(points);
             
-            ScoreChanged?.Invoke(_score);
+            ScoreChanged?.Invoke(points, _score);
+            AddHit();
             
             if (_score > Record)
                 Record = _score;
         }
 
+        public void SetTarget(int target)
+        {
+            TargetScore = target;
+        }
+
+        private void AddHit()
+        {
+            CurrentThrow++;
+        }
+
         public void Reset()
         {
             _score = 0;
-            ScoreChanged?.Invoke(_score);
+            ScoreChanged?.Invoke(0, _score);
         }
 
         public void LoadData(ISaveLoadDataService saveLoadDataService)

@@ -10,6 +10,12 @@ namespace Code.Triggers
             if(other.TryGetComponent(out TView view))
                 InteractWith(view);
         }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if(other.TryGetComponent(out TView view))
+                InteractWith(view);
+        }
+        
 
         protected abstract void InteractWith(TView view);
     }

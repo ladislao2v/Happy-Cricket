@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections;
 using Code.Services.CoroutineRunner;
+using Code.Services.MovementService;
 using Code.Services.PauseService;
 using Code.Services.ScoreService;
+using Code.Services.StatsService;
+using Code.StateMachine;
+using Code.StateMachine.States;
 using Code.Views.Players;
 using ModestTree.Util;
 using UnityEngine;
@@ -17,7 +21,8 @@ namespace Code.UI.Gameplay
         [SerializeField] private Sprite _goodSprite;
         [SerializeField] private Sprite _missSprite;
         [SerializeField] private PauseView _pauseView;
-        [SerializeField] private PauseButton _pauseButton;
+        [SerializeField] private HalfView _halfView;
+        [SerializeField] private CustomButton _pauseButton;
         [SerializeField] private ScoreView _scoreView;
         [SerializeField] private float _delay;
 
@@ -26,11 +31,15 @@ namespace Code.UI.Gameplay
         private StrikerView _strikerView;
         private ICoroutineRunner _coroutineRunner;
         private Coroutine _showing;
+        private IStatsService _statsService;
+        private IStateMachine _stateMachine;
 
         [Inject]
-        private void Construct(IScoreService scoreService, IPauseService pauseService, 
-            ICoroutineRunner coroutineRunner, StrikerView strikerView)
+        private void Construct(IScoreService scoreService, IPauseService pauseService, IStateMachine stateMachine,
+            ICoroutineRunner coroutineRunner, StrikerView strikerView, IStatsService statsService)
         {
+            _stateMachine = stateMachine;
+            _statsService = statsService;
             _coroutineRunner = coroutineRunner;
             _strikerView = strikerView;
             _pauseService = pauseService;
@@ -40,9 +49,25 @@ namespace Code.UI.Gameplay
         private void OnEnable()
         {
             _scoreService.ScoreChanged += _scoreView.OnScoreChanged;
+            _scoreView.SetTarget(_scoreService.TargetScore);
             _pauseButton.Subscribe(OnPauseClicked);
             _pauseView.Subscribe(OnResumeClicked);
             _strikerView.Kicked += ShowGood;
+            _scoreView.OnHalf += OnHalf;
+            _halfView.ContinueButton.Subscribe(OnContinue);
+            _scoreView.OnFinish += _stateMachine.Enter<GameloseState>;
+        }
+
+        private void OnContinue()
+        {
+            _halfView.gameObject.SetActive(false);
+            _stateMachine.Enter<PitcherThrowState>();
+        }
+
+        private void OnHalf()
+        {
+            _stateMachine.Enter<WaitState>();
+            _halfView.gameObject.SetActive(true);
         }
 
         private void OnDisable()
@@ -51,18 +76,27 @@ namespace Code.UI.Gameplay
             _pauseButton.Unsubscribe(OnPauseClicked);
             _pauseView.Unsubscribe(OnResumeClicked);
             _strikerView.Kicked -= ShowGood;
+            _scoreView.OnFinish -= _stateMachine.Enter<GameloseState>;
         }
 
         public void ShowGood()
         {
-            _coroutineRunner.StopCoroutine(_showing);
+            if(_showing != null)
+                _coroutineRunner.StopCoroutine(_showing);
+            
             _showing = _coroutineRunner.StartCoroutine(ShowSprite(_goodSprite));
+            
+            _statsService.AddHitCount();
         }
 
         public void ShowMiss()
         {
-            _coroutineRunner.StopCoroutine(_showing);
+            if(_showing != null)
+                _coroutineRunner.StopCoroutine(_showing);
+            
             _showing = _coroutineRunner.StartCoroutine(ShowSprite(_missSprite));
+            
+            _statsService.AddMissedCount();
         }
 
         private IEnumerator ShowSprite(Sprite sprite)
@@ -78,13 +112,17 @@ namespace Code.UI.Gameplay
 
         private void OnResumeClicked()
         {
+            _pauseButton.gameObject.SetActive(true);
             _pauseService.Resume();
+            Time.timeScale = 1;
         }
 
-        private void OnPauseClicked(bool value)
+        private void OnPauseClicked()
         {
+            Time.timeScale = 0;
             _pauseService.Pause();
             _pauseView.Show();
+            _pauseButton.gameObject.SetActive(false);
         }
     }
 }

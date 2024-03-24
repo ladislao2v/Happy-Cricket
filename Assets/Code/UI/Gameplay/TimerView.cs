@@ -9,7 +9,7 @@ namespace Code.UI.Gameplay
         
         public void Render(int value)
         {
-            _text.text = value + "s";
+            _text.text = value + "";
         }
     }
 }

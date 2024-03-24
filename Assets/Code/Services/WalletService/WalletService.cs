@@ -8,6 +8,7 @@ namespace Code.Services.WalletService
         private int _money;
         
         public event Action<int> MoneyChanged;
+        public int Value => _money;
 
         public void Add(int value)
         {

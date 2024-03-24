@@ -1,15 +1,23 @@
+using Code.UI.StatsInformation;
+
 namespace Code.StateMachine.States
 {
     public class StatsInformationState : IState
     {
+        private readonly StatsOverlay _statsOverlay;
+
+        public StatsInformationState(StatsOverlay statsOverlay)
+        {
+            _statsOverlay = statsOverlay;
+        }
         public void Enter()
         {
-            throw new System.NotImplementedException();
+            _statsOverlay.Show();
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+            _statsOverlay.Hide();
         }
     }
 }
