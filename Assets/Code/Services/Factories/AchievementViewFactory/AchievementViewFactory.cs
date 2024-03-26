@@ -16,10 +16,10 @@ namespace Code.Services.Factories.AchievementViewFactory
             _prefab = prefab;
         }
         
-        public IAchievementView Create(IAchievementConfig config, Transform parent)
+        public IAchievementView Create(IAchievementConfig config, bool isOpen, Transform parent)
         {
             var view = _diContainer.InstantiatePrefabForComponent<AchievementView>(_prefab, parent);
-            view.Construct(config);
+            view.Construct(config, isOpen);
 
             return view;
         }

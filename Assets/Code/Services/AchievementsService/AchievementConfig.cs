@@ -7,7 +7,7 @@ namespace Code.Services.AchievementsService
     public class AchievementConfig : ScriptableObject, IAchievementConfig
     {
         [field: SerializeField] public int Score { get; private set; }
-        [field: SerializeField] public string Name { get; private set; }
-        [field: SerializeField] public Sprite Sprite { get; private set; }
+        [field: SerializeField] public Sprite OpenSprite { get; private set; }
+        [field: SerializeField] public Sprite CloseSprite { get; private set; }
     }
 }

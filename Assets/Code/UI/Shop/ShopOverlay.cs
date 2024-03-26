@@ -3,6 +3,7 @@ using System.Linq;
 using Code.Services.Factories.ShopItemViewFactory;
 using Code.Services.ShopService;
 using Code.Services.SkinService;
+using Code.Services.StaticDataService.Configs;
 using Code.Services.WalletService;
 using Code.StateMachine;
 using Code.StateMachine.States;
@@ -79,16 +80,31 @@ namespace Code.UI.Shop
             {
                 var config = shopItem.Config;
                 
-                if(value > config.Price)
+                if(_shopService.Items[config])
+                    continue;
+                
+                if(value >= config.Price)
                     shopItem.MakeActive();
                 else
                     shopItem.MakePassive();
+                
+                if(_shopService.Items[config])
+                    shopItem.MakeActive();
             }
         }
 
-        private void OnDressButtonClicked(GameObject skin)
+        private void OnDressButtonClicked(IItemConfig config)
         {
-            _skinService.Dress(skin);
+            
+
+            var index = _shopService.Items.Keys.ToList().IndexOf(config);
+            
+            Debug.Log(index);
+            
+            if (_shopService.Items[config] == false)
+                return;
+
+            _skinService.Dress(index);
         }
 
         public void Load()
@@ -103,20 +119,26 @@ namespace Code.UI.Shop
             var values = _shopService.Items.Values.ToArray();
             
             for(int i = 0; i < _shopItems.Count; i++)
-                _shopItems[0].Construct(keys[i], values[i]);
+                _shopItems[i].Construct(keys[i], values[i]);
         }
 
         private void OnBuyButtonClicked(IShopItemView view)
         {
             var config = view.Config;
             
+            var index = _shopService.Items.Keys.ToList().IndexOf(config);
+            
+            Debug.Log(index);
+
             if (_shopService.Items[config])
-                _skinService.Dress(config.Prefab);
+            {
+                return;
+            }
             
             if(_shopService.TryBuy(config) == false)
                 return;
 
-            _skinService.Dress(config.Prefab);
+            _skinService.Dress(index);
         }
 
         public void OnBackButtonClicked()

@@ -1,3 +1,4 @@
+using Code.Services.SkinService;
 using UnityEngine;
 
 namespace Code.Services.StaticDataService.Configs
@@ -6,7 +7,7 @@ namespace Code.Services.StaticDataService.Configs
     {
         Sprite Sprite { get; }
         string Name { get; }
-        GameObject Prefab { get; }
+        Skin Prefab { get; }
         int Price { get; }
         Sprite Background { get; }
     }

@@ -4,9 +4,9 @@ using Code.Services.ScoreService;
 
 namespace Code.Services.AchievementsService
 {
-    public interface IAchievementsService : ILoadable, ISavable
+    public interface IAchievementsService
     {
-        IReadOnlyList<IAchievementConfig> OpenedAchievements { get; }
+        IReadOnlyDictionary<IAchievementConfig, bool> OpenedAchievements { get; }
         void Load(int score);
     }
 }

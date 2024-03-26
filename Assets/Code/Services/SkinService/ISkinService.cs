@@ -6,7 +6,7 @@ namespace Code.Services.SkinService
     public interface ISkinService : ILoadable, ISavable
     {
         int LastSkin { get; }
-        void Dress(GameObject skin);
+        void Dress(int index);
         void Dress();
     }
 }

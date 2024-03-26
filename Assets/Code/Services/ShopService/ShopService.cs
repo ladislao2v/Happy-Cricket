@@ -10,8 +10,9 @@ namespace Code.Services.ShopService
 {
     public class ShopService : IShopService
     {
-        private readonly Dictionary<IItemConfig, bool> _items;
         private readonly IWalletService _walletService;
+        
+        private Dictionary<IItemConfig, bool> _items;
         public IReadOnlyDictionary<IItemConfig, bool> Items => _items;
         
         public event Action Updated;
@@ -20,9 +21,13 @@ namespace Code.Services.ShopService
         {
             _walletService = walletService;
             
+            var shopItems = staticDataService.GetShopItems();
+
+            var sortedShopItems = 
+                shopItems.OrderBy(x => x.Price);
+            
             _items = 
-                staticDataService
-                    .GetShopItems()
+               sortedShopItems
                     .ToDictionary(x => x, x=> false);
         }
 
@@ -36,6 +41,8 @@ namespace Code.Services.ShopService
 
             if (_walletService.TrySpend(config.Price) == false)
                 return false;
+
+            _items[config] = true;
             
             Updated?.Invoke();
             
@@ -47,11 +54,8 @@ namespace Code.Services.ShopService
             var items = saveLoadDataService
                 .LoadByCustomKey<Dictionary<IItemConfig, bool>>(nameof(Items));
 
-            foreach (var pair in items)
-            {
-                _items.Add(pair.Key, pair.Value);
-            }
-            
+            _items = items;
+
             Updated?.Invoke();
         }
 

@@ -12,20 +12,23 @@ namespace Code.UI.Shop
         [SerializeField] private Image _image;
         [SerializeField] private CustomButton _buyButton;
         
-        private bool _isLock;
+        private bool _isOpen;
 
         public IItemConfig Config { get; private set; }
 
         public event Action<IShopItemView> BuyButtonClicked;
-        public event Action<GameObject> DressButtonClicked;
+        public event Action<IItemConfig> DressButtonClicked;
         
-        public void Construct(IItemConfig config, bool isLock)
+        public void Construct(IItemConfig config, bool isOpen)
         {
             Config = config;
             
             _backgroundImage.sprite = config.Background;
             _image.sprite = config.Sprite;
-            _isLock = isLock;
+            _isOpen = isOpen;
+            
+            if(_isOpen)
+                MakeActive();
         }
         
         public void MakeActive()
@@ -35,6 +38,9 @@ namespace Code.UI.Shop
 
         public void MakePassive()
         {
+            if(_isOpen)
+                return;
+            
             _image.gameObject.SetActive(true);
         }
 
@@ -50,9 +56,9 @@ namespace Code.UI.Shop
 
         private void OnBuyButtonClicked()
         {
-            if (_isLock)
+            if (_isOpen)
             {
-                DressButtonClicked?.Invoke(Config.Prefab);
+                DressButtonClicked?.Invoke(Config);
                 return;
             }
             

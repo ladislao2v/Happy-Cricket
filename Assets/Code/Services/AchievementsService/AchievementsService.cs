@@ -1,39 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using Code.Services.SaveLoadDataService;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Code.Services.StaticDataService;
-using UnityEngine;
 
 namespace Code.Services.AchievementsService
 {
     public class AchievementsService : IAchievementsService
     {
-        private readonly IAchievementConfig[] _achievements;
-        private readonly List<IAchievementConfig> _openedAchievements = new();
-        
-        public IReadOnlyList<IAchievementConfig> OpenedAchievements => _openedAchievements;
+        private readonly Dictionary<IAchievementConfig, bool> _openedAchievements = new();
 
-        public AchievementsService(IStaticDataService staticDataService) => 
-            _achievements = staticDataService.GetAchievements();
+        public IReadOnlyDictionary<IAchievementConfig, bool> OpenedAchievements => _openedAchievements;
 
-        public void Load(int score)
+        public AchievementsService(IStaticDataService staticDataService)
         {
-            foreach (IAchievementConfig achievementConfig in _achievements)
+            var achievements = staticDataService.GetAchievements();
+
+            var sortedAchievements = 
+                achievements.OrderBy(x => x.Score);
+            
+            foreach (var achievement in sortedAchievements)
             {
-                if(score > achievementConfig.Score)
-                    _openedAchievements.Add(achievementConfig);
+                _openedAchievements.Add(achievement, false);
             }
         }
 
-        public void LoadData(ISaveLoadDataService saveLoadDataService)
+        public void Load(int score)
         {
-            var opened = saveLoadDataService
-                .LoadByCustomKey<List<IAchievementConfig>>(nameof(OpenedAchievements));
-            
-            opened.ForEach(x => _openedAchievements.Add(x));
+            foreach (var achievement in _openedAchievements.Keys)
+            {
+                if (score > achievement.Score)
+                    _openedAchievements[achievement] = true;
+            }
         }
 
-        public void SaveData(ISaveLoadDataService saveLoadDataService) => 
-            saveLoadDataService.SaveByCustomKey(_openedAchievements, nameof(OpenedAchievements));
     }
 }

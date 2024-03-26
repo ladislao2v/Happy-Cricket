@@ -42,9 +42,9 @@ namespace Code.UI.Achievements
                 return;
             }
             
-            foreach (var achievement in _achievementsService.OpenedAchievements)
+            foreach (var pair in _achievementsService.OpenedAchievements)
             {
-                _achievementViewFactory.Create(achievement, _container);
+                _achievementViewFactory.Create(pair.Key, pair.Value, _container);
             }
         }
 

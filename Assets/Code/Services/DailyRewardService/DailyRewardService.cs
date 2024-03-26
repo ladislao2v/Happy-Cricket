@@ -6,9 +6,9 @@ namespace Code.Services.DailyRewardService
     public class DailyRewardService : IDailyRewardService
     {
         private int _lastDay;
-        private DateTime _lastDate;
-        
-        public int CurrentDay { get; private set; }
+        private DateTime _lastDate = DateTime.Today;
+
+        public int CurrentDay { get; private set; } = 1;
 
         public bool CanGiveBonus => _lastDay < CurrentDay;
 
@@ -17,28 +17,18 @@ namespace Code.Services.DailyRewardService
             if(_lastDay == CurrentDay)
                 return;
 
-            CurrentDay = _lastDay;
-            
-            if (_lastDay == 0)
-            {
-                CurrentDay = 1;
-                return;
-            }
-
             var time = DateTime.Now;
 
             if (time.Day == _lastDate.Day)
-            {
                 return;
-            }
-
-            CurrentDay += 1;
+            
             _lastDate = time;
         }
 
         public void Take()
         {
-            CurrentDay = _lastDay;
+            _lastDay = CurrentDay;
+            CurrentDay += 1;
         }
 
         public void LoadData(ISaveLoadDataService saveLoadDataService)

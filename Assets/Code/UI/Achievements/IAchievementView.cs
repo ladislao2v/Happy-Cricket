@@ -4,6 +4,6 @@ namespace Code.UI.Achievements
 {
     public interface IAchievementView
     {
-        void Construct(IAchievementConfig config);
+        void Construct(IAchievementConfig config, bool isOpen);
     }
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: 1000
   m_EditorClassIdentifier: 
   <Score>k__BackingField: 1000
-  <Name>k__BackingField: 
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 53043a7cb4f64493d985fa7ddfdb4a15, type: 3}
+  <OpenSprite>k__BackingField: {fileID: 21300000, guid: 53043a7cb4f64493d985fa7ddfdb4a15, type: 3}
+  <CloseSprite>k__BackingField: {fileID: 21300000, guid: 3d551499dc1e8f34282a454598e8ecf6, type: 3}

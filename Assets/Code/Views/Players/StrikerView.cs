@@ -1,27 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Mail;
 using Code.Services.OverlapService;
 using Code.Services.ScoreService;
+using Code.Services.SkinService;
 using Code.Services.StatsService;
 using Code.StateMachine;
 using Code.StateMachine.States;
 using Code.Views.Ball;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Code.Views.Players
 {
     public class StrikerView : MonoBehaviour, IPlayer
     {
+        [SerializeField] private List<Skin> _skins;
         [SerializeField] private Transform _head;
         
         private IStateMachine _stateMachine;
         private IOverlapService _overlapService;
         private IMovementService _movementService;
         
-        private GameObject _skin;
         private IScoreService _scoreService;
         private IStatsService _statsService;
+        private int _lastSkin;
 
         public event Action Swung;
         public event Action Kicked;
@@ -79,11 +83,19 @@ namespace Code.Views.Players
             Losed?.Invoke();
         }
 
-        public void SetSkin(GameObject skin)
+        public void SetSkin(int index)
         {
-            Destroy(_skin);
+            if (_skins[_lastSkin] != null)
+            {
+                _skins[_lastSkin].gameObject.SetActive(false);
+            }
 
-            _skin = Instantiate(skin, _head);
+            if (_skins[index] != null)
+            {
+                _skins[index].gameObject.SetActive(true);
+            }
+
+            _lastSkin = index;
         }
     }
 }

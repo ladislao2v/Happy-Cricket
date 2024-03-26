@@ -6,6 +6,6 @@ namespace Code.Services.Factories.AchievementViewFactory
 {
     public interface IAchievementViewFactory
     {
-        IAchievementView Create(IAchievementConfig config, Transform parent);
+        IAchievementView Create(IAchievementConfig config, bool isOpen, Transform parent);
     }
 }

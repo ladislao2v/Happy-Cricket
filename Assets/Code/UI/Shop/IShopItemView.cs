@@ -8,8 +8,8 @@ namespace Code.UI.Shop
     {
         IItemConfig Config { get; }
         event Action<IShopItemView> BuyButtonClicked;
-        event Action<GameObject> DressButtonClicked;
-        void Construct(IItemConfig config, bool isLock);
+        event Action<IItemConfig> DressButtonClicked;
+        void Construct(IItemConfig config, bool isOpen);
         void MakeActive();
         void MakePassive();
     }

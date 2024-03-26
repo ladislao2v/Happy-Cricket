@@ -8,22 +8,25 @@ namespace Code.UI.DailyReward
     {
         [SerializeField] private Image _backgroundImage;
         [SerializeField] private int _bonus;
-        [SerializeField] private Color _color;
+        [SerializeField] private Sprite _blocked;
+
+        private Sprite _opened;
         public int Bonus => _bonus;
 
         private void OnValidate()
         {
             _backgroundImage ??= GetComponent<Image>();
+            _opened = _backgroundImage.sprite;
         }
 
         public void MakeActive()
         {
-            _backgroundImage.material.color = Color.white;
+            _backgroundImage.sprite = _opened;
         }
 
         public void MakeDisactive()
         {
-            _backgroundImage.material.color = _color;
+            _backgroundImage.sprite = _blocked;
         }
     }
 }

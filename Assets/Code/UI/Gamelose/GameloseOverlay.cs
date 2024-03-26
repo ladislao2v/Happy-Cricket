@@ -36,19 +36,18 @@ namespace Code.UI.Gamelose
         {
             _homeButton.Subscribe(OnRestartButtonClicked);
             _walletService.MoneyChanged += _walletView.OnMoneyChanged;
+            _recordView.Render(_scoreService.Score);
 
             if (_scoreService.IsWin)
             {
                 _win.SetActive(true);
                 _statsService.AddMatchWin();
+                _walletService.Add(_scoreService.Score);
             }
             else
             {
                 _lose.SetActive(true);
             }
-            
-            _walletService.Add(_scoreService.Score);
-            _recordView.Render(_scoreService.Record);
         }
 
         private void OnDisable()
