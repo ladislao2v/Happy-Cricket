@@ -7,7 +7,7 @@ namespace Code.Services.StaticDataService
 {
     public interface IStaticDataService
     {
-         IItemConfig[] GetShopItems();
-         IAchievementConfig[] GetAchievements();
+         ItemConfig[] GetShopItems();
+         AchievementConfig[] GetAchievements();
     }
 }

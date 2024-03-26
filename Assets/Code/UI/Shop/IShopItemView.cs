@@ -6,10 +6,10 @@ namespace Code.UI.Shop
 {
     public interface IShopItemView
     {
-        IItemConfig Config { get; }
+        ItemConfig Config { get; }
         event Action<IShopItemView> BuyButtonClicked;
-        event Action<IItemConfig> DressButtonClicked;
-        void Construct(IItemConfig config, bool isOpen);
+        event Action<ItemConfig> DressButtonClicked;
+        void Construct(ItemConfig config, bool isOpen);
         void MakeActive();
         void MakePassive();
     }

@@ -67,7 +67,6 @@ namespace Code.UI.Gameplay
         private void OnHalf()
         {
             _stateMachine.Enter<WaitState>();
-            _halfView.gameObject.SetActive(true);
         }
 
         private void OnDisable()
@@ -76,6 +75,7 @@ namespace Code.UI.Gameplay
             _pauseButton.Unsubscribe(OnPauseClicked);
             _pauseView.Unsubscribe(OnResumeClicked);
             _strikerView.Kicked -= ShowGood;
+            _scoreView.OnHalf -= OnHalf;
             _scoreView.OnFinish -= _stateMachine.Enter<GameloseState>;
         }
 

@@ -13,25 +13,23 @@ namespace Code.Services.StaticDataService
         private const string ShopItemsPath = "ShopItems";
         private const string AchievementsPath = "Achievements";
         
-        private readonly List<IItemConfig> _shopItemsConfigs;
-        private readonly List<IAchievementConfig> _achievementsConfigs;
+        private readonly List<ItemConfig> _shopItemsConfigs;
+        private readonly List<AchievementConfig> _achievementsConfigs;
 
         public StaticDataService()
         {
             _shopItemsConfigs = Resources
                 .LoadAll<ItemConfig>(ShopItemsPath)
-                .Cast<IItemConfig>()
                 .ToList();
             _achievementsConfigs = Resources
                 .LoadAll<AchievementConfig>(AchievementsPath)
-                .Cast<IAchievementConfig>()
                 .ToList();
         }
 
-        public IItemConfig[] GetShopItems() => 
+        public ItemConfig[] GetShopItems() => 
             _shopItemsConfigs.ToArray();
 
-        public IAchievementConfig[] GetAchievements() => 
+        public AchievementConfig[] GetAchievements() => 
             _achievementsConfigs.ToArray();
     }
 }

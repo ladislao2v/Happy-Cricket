@@ -4,6 +4,7 @@ using Code.Services.GameDataService;
 using Code.Services.InputService;
 using Code.Services.PauseService;
 using Code.Services.ScoreService;
+using Code.Services.ShopService;
 using Code.Services.SkinService;
 using Code.Services.StatsService;
 using Code.Services.TimerService;
@@ -23,6 +24,7 @@ namespace Code.StateMachine.States
         private readonly IClubService _clubService;
         private readonly ISkinService _skinService;
         private readonly IDailyRewardService _dailyRewardService;
+        private readonly IShopService _shopService;
         private readonly ITimer _timer;
 
         public InitialState(IStateMachine stateMachine,
@@ -35,6 +37,7 @@ namespace Code.StateMachine.States
             IClubService clubService,
             ISkinService skinService,
             IDailyRewardService dailyRewardService,
+            IShopService shopService,
             ITimer timer)
         {
             _stateMachine = stateMachine;
@@ -47,6 +50,7 @@ namespace Code.StateMachine.States
             _clubService = clubService;
             _skinService = skinService;
             _dailyRewardService = dailyRewardService;
+            _shopService = shopService;
             _timer = timer;
         }
 
@@ -65,6 +69,7 @@ namespace Code.StateMachine.States
             _gameDataService.Add(_clubService);
             _gameDataService.Add(_skinService);
             _gameDataService.Add(_scoreService);
+            _gameDataService.Add(_shopService);
             _gameDataService.Add(_dailyRewardService);
         }
 

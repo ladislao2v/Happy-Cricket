@@ -93,7 +93,7 @@ namespace Code.UI.Shop
             }
         }
 
-        private void OnDressButtonClicked(IItemConfig config)
+        private void OnDressButtonClicked(ItemConfig config)
         {
             
 
@@ -109,6 +109,8 @@ namespace Code.UI.Shop
 
         public void Load()
         {
+            Debug.Log(_shopService.Items.Count);
+            
             foreach (var pair in _shopService.Items)
                 _shopItems.Add(_shopItemViewFactory.Create(pair.Key, pair.Value, _container));
         }

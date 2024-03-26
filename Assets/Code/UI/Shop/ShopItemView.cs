@@ -10,25 +10,29 @@ namespace Code.UI.Shop
     {
         [SerializeField] private Image _backgroundImage;
         [SerializeField] private Image _image;
+        [SerializeField] private Image _cell;
         [SerializeField] private CustomButton _buyButton;
         
         private bool _isOpen;
 
-        public IItemConfig Config { get; private set; }
+        public ItemConfig Config { get; private set; }
 
         public event Action<IShopItemView> BuyButtonClicked;
-        public event Action<IItemConfig> DressButtonClicked;
+        public event Action<ItemConfig> DressButtonClicked;
         
-        public void Construct(IItemConfig config, bool isOpen)
+        public void Construct(ItemConfig config, bool isOpen)
         {
             Config = config;
             
             _backgroundImage.sprite = config.Background;
             _image.sprite = config.Sprite;
             _isOpen = isOpen;
-            
-            if(_isOpen)
+
+            if (_isOpen)
+            {
                 MakeActive();
+                Cell();
+            }
         }
         
         public void MakeActive()
@@ -42,6 +46,11 @@ namespace Code.UI.Shop
                 return;
             
             _image.gameObject.SetActive(true);
+        }
+
+        private void Cell()
+        {
+            _cell.enabled = true;
         }
 
         private void OnEnable()

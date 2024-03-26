@@ -7,6 +7,7 @@ using Code.Services.SkinService;
 using Code.Services.StatsService;
 using Code.StateMachine;
 using Code.StateMachine.States;
+using Code.UI.Gameplay;
 using Code.Views.Ball;
 using UnityEngine;
 using Zenject;
@@ -16,6 +17,7 @@ namespace Code.Views.Players
 {
     public class StrikerView : MonoBehaviour, IPlayer
     {
+        [SerializeField] private HalfView _halfView;
         [SerializeField] private List<Skin> _skins;
         [SerializeField] private Transform _head;
         
@@ -75,6 +77,11 @@ namespace Code.Views.Players
         {
             if (_scoreService.CurrentThrow != 3 && _scoreService.CurrentThrow != 6)
                 _stateMachine.Enter<PitcherThrowState>();
+            else
+            {
+                if (_scoreService.CurrentThrow == 3)
+                    _halfView.gameObject.SetActive(true);
+            }
         }
 
 

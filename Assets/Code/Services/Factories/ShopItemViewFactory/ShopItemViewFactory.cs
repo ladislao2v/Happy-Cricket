@@ -16,7 +16,7 @@ namespace Code.Services.Factories.ShopItemViewFactory
             _prefab = prefab;
         }
 
-        public IShopItemView Create(IItemConfig config, bool isLock, Transform container)
+        public IShopItemView Create(ItemConfig config, bool isLock, Transform container)
         {
             var view = _diContainer.InstantiatePrefabForComponent<ShopItemView>(_prefab, container);
             

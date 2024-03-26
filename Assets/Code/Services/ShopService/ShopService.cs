@@ -5,6 +5,7 @@ using Code.Services.SaveLoadDataService;
 using Code.Services.StaticDataService;
 using Code.Services.StaticDataService.Configs;
 using Code.Services.WalletService;
+using UnityEngine;
 
 namespace Code.Services.ShopService
 {
@@ -12,8 +13,8 @@ namespace Code.Services.ShopService
     {
         private readonly IWalletService _walletService;
         
-        private Dictionary<IItemConfig, bool> _items;
-        public IReadOnlyDictionary<IItemConfig, bool> Items => _items;
+        private Dictionary<ItemConfig, bool> _items;
+        public IReadOnlyDictionary<ItemConfig, bool> Items => _items;
         
         public event Action Updated;
 
@@ -25,13 +26,15 @@ namespace Code.Services.ShopService
 
             var sortedShopItems = 
                 shopItems.OrderBy(x => x.Price);
-            
+
             _items = 
                sortedShopItems
                     .ToDictionary(x => x, x=> false);
+            
+            Debug.Log(nameof(_items) + _items.Count);
         }
 
-        public bool TryBuy(IItemConfig config)
+        public bool TryBuy(ItemConfig config)
         {
             if (_items.ContainsKey(config) == false)
                 throw new ArgumentException(nameof(config));
@@ -51,16 +54,26 @@ namespace Code.Services.ShopService
 
         public void LoadData(ISaveLoadDataService saveLoadDataService)
         {
-            var items = saveLoadDataService
-                .LoadByCustomKey<Dictionary<IItemConfig, bool>>(nameof(Items));
-
-            _items = items;
+            var values = saveLoadDataService
+                .Load<bool[]>();
+            
+            if(values == null)
+                return;
+            
+            if(values.Length == 0)
+                return;
+            
+            var keys = _items.Keys.ToArray();
+            for(int i = 0; i < _items.Count; i++)
+            {
+                _items[keys[i]] = values[i];
+            }
 
             Updated?.Invoke();
         }
 
         public void SaveData(ISaveLoadDataService saveLoadDataService) =>
             saveLoadDataService
-                .SaveByCustomKey(_items, nameof(Items));
+                .Save(_items.Values.ToArray());
     }
 }

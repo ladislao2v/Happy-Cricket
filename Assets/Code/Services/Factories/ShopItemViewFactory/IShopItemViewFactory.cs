@@ -6,6 +6,6 @@ namespace Code.Services.Factories.ShopItemViewFactory
 {
     public interface IShopItemViewFactory
     {
-        IShopItemView Create(IItemConfig config, bool isLock, Transform container);
+        IShopItemView Create(ItemConfig config, bool isLock, Transform container);
     }
 }
