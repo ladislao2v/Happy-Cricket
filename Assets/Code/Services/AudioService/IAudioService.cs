@@ -7,5 +7,6 @@ namespace Code.Services.AudioService
         bool IsMute { get; }
         void Enable();
         void Disable();
+        void Clear();
     }
 }

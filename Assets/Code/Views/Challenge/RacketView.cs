@@ -2,6 +2,7 @@
 using Code.Services.HealthService;
 using Code.Services.PauseService;
 using Code.Services.ScoreService;
+using Code.Services.StatsService;
 using Code.Views.Ball;
 using UnityEngine;
 using Zenject;
@@ -12,10 +13,13 @@ namespace Code.Views.Challenge
     {
         private bool _isPaused;
         private IScoreService _scoreService;
+        private IStatsService _statsService;
 
         [Inject]
-        private void Construct(IScoreService scoreService)
+        private void Construct(IScoreService scoreService
+            , IStatsService statsService)
         {
+            _statsService = statsService;
             _scoreService = scoreService;
         }
 
@@ -37,6 +41,7 @@ namespace Code.Views.Challenge
             
             ballView.Fly(Vector3.up);
             _scoreService.Add(1);
+            _statsService.AddChallengeWin();
         }
 
         public void OnPause()

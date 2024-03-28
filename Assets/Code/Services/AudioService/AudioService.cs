@@ -29,6 +29,12 @@ namespace Code.Services.AudioService
             IsMute = true;
         }
 
+        public void Clear()
+        {
+            _audioSource.Stop();
+            _audioSource.clip = null;
+        }
+
         public void SaveData(ISaveLoadDataService saveLoadDataService)
         {
             saveLoadDataService.SaveByCustomKey((bool?)IsMute, nameof(IsMute));
