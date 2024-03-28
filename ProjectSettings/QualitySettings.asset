@@ -156,6 +156,7 @@ QualitySettings:
     terrainMaxTrees: 50
     excludedTargetPlatforms:
     - WebGL
+    - Android
   - serializedVersion: 3
     name: High
     pixelLightCount: 2

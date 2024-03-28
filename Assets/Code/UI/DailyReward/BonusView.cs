@@ -9,14 +9,12 @@ namespace Code.UI.DailyReward
         [SerializeField] private Image _backgroundImage;
         [SerializeField] private int _bonus;
         [SerializeField] private Sprite _blocked;
-
-        private Sprite _opened;
+        [SerializeField] private Sprite _opened;
         public int Bonus => _bonus;
 
         private void OnValidate()
         {
             _backgroundImage ??= GetComponent<Image>();
-            _opened = _backgroundImage.sprite;
         }
 
         public void MakeActive()
