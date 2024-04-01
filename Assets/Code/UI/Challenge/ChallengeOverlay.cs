@@ -1,9 +1,7 @@
 ﻿using Code.Services.HealthService;
 using Code.Services.ScoreService;
-using Code.StateMachine.States;
 using Code.UI.Gameplay;
 using Code.Views.Ball;
-using UnityEditor.Search;
 using UnityEngine;
 using Zenject;
 

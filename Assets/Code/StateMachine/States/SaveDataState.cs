@@ -1,6 +1,7 @@
 ﻿using Code.Services.AudioService;
 using Code.Services.GameDataService;
 using Code.Services.SceneLoaderService;
+using DG.Tweening;
 
 namespace Code.StateMachine.States
 {
@@ -26,9 +27,9 @@ namespace Code.StateMachine.States
         {
             _gameDataService.SaveData();
             _audioService.Clear();
-            _sceneLoader.Restart();
             
-            _stateMachine.Enter<LoadDataState>();
+            DOTween.Clear();
+            _sceneLoader.Restart();
         }
 
         public void Exit() { }

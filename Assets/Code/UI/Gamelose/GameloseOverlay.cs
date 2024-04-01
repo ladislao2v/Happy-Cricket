@@ -41,13 +41,14 @@ namespace Code.UI.Gamelose
             if (_scoreService.IsWin)
             {
                 _win.SetActive(true);
-                _statsService.AddMatchWin();
                 _walletService.Add(_scoreService.Score);
             }
             else
             {
                 _lose.SetActive(true);
             }
+            
+            _statsService.AddMatchWin();
         }
 
         private void OnDisable()

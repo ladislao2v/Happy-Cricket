@@ -20,6 +20,9 @@ namespace Code.Triggers
         private IScoreService _scoreService;
         private StrikerView _strikerView;
         private IStatsService _statsService;
+        
+        [SerializeField]
+        private HalfView _halfView;
 
         [Inject]
         private void Construct(IStateMachine stateMachine, GameplayOverlay gameplayOverlay, IScoreService scoreService,
@@ -38,6 +41,9 @@ namespace Code.Triggers
             _gameplayOverlay.ShowMiss();
             _scoreService.Add(0);
             _statsService.AddMissedCount();
+
+            if (_scoreService.CurrentThrow == 3)
+                _halfView.gameObject.SetActive(true);
             
             if(_scoreService.CurrentThrow != 3 && _scoreService.CurrentThrow != 6)
                 _stateMachine.Enter<PitcherThrowState>();
