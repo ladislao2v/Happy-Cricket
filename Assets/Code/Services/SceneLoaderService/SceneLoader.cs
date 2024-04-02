@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using Code.Services.CoroutineRunner;
 using UnityEngine;
@@ -17,14 +17,14 @@ namespace Code.Services.SceneLoaderService
         
         public void Load(string name, Action loaded = null)
         {
-            _coroutineRunner.StartCoroutine(LoadScene(name, loaded));
+            SceneManager.LoadScene(name);
         }
 
         public void Restart(Action loaded = null)
         {
             var activeScene = SceneManager.GetActiveScene();
 
-            _coroutineRunner.StartCoroutine(LoadScene(activeScene.name, loaded));
+            SceneManager.LoadScene(activeScene.name);
         }
 
         private IEnumerator LoadScene(string name, Action loaded)
