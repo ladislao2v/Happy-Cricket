@@ -36,8 +36,6 @@ namespace Code.Services.SaveLoadDataService
             
             PlayerPrefs.SetString(key, json);
             PlayerPrefs.Save();
-            
-            Debug.Log("Save is done!");
         }
 
         private TLoadable LoadData<TLoadable>(string key)
@@ -46,9 +44,6 @@ namespace Code.Services.SaveLoadDataService
 
             TLoadable loadable = JsonConvert.DeserializeObject<TLoadable>(json, _settings);
 
-            if (loadable != null)
-                Debug.Log("Load is done");
-            
             return loadable;
         }
     }

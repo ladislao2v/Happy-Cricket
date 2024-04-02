@@ -34,15 +34,6 @@ namespace Code.Views.Ball
             _rigidbody.velocity = Vector3.zero;
             
             _rigidbody.AddForce(direction * _speed, _forceMode);
-
-            _coroutineRunner.StartCoroutine(Hide());
-        }
-
-        private IEnumerator Hide()
-        {
-            yield return _delay;
-            
-            gameObject?.SetActive(false);
         }
     }
 }

@@ -70,18 +70,22 @@ namespace Code.Views.Players
 
         public void Run(int count)
         {
+            if (_scoreService.CurrentThrow == 6)
+                return;
+
             _movementService.Run(count, OnRun);
         }
 
         public void OnRun()
         {
-            if (_scoreService.CurrentThrow != 3 && _scoreService.CurrentThrow != 6)
-                _stateMachine.Enter<PitcherThrowState>();
-            else
+            if (_scoreService.CurrentThrow == 3)
             {
-                if (_scoreService.CurrentThrow == 3)
-                    _halfView.gameObject.SetActive(true);
+                _halfView.gameObject.SetActive(true);
+                Debug.Log("Half after hit");
+                return;
             }
+                
+            _stateMachine.Enter<PitcherThrowState>();
         }
 
 

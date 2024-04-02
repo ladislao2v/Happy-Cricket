@@ -1,6 +1,7 @@
 ﻿using System;
 using Code.Services.SaveLoadDataService;
 using Code.Services.WalletService;
+using UnityEngine;
 
 namespace Code.Services.ScoreService
 {
@@ -25,14 +26,13 @@ namespace Code.Services.ScoreService
 
         public void Add(int points)
         {
-            if (points < 0)
-                throw new ArgumentOutOfRangeException(nameof(points));
-
             _score += points;
             _walletService.Add(points);
-            
+
             ScoreChanged?.Invoke(points, _score);
             AddHit();
+            
+            Debug.Log(nameof(CurrentThrow)+ ": " + CurrentThrow);
             
             if (_score > Record)
                 Record = _score;
@@ -51,6 +51,7 @@ namespace Code.Services.ScoreService
         public void Reset()
         {
             _score = 0;
+            CurrentThrow = 0;
             ScoreChanged?.Invoke(0, _score);
         }
 

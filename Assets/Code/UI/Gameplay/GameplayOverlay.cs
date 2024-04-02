@@ -60,12 +60,14 @@ namespace Code.UI.Gameplay
 
         private void OnContinue()
         {
+            _pauseButton.gameObject.SetActive(true);
             _halfView.gameObject.SetActive(false);
             _stateMachine.Enter<PitcherThrowState>();
         }
 
         private void OnHalf()
         {
+            _pauseButton.gameObject.SetActive(false);
             _stateMachine.Enter<WaitState>();
         }
 

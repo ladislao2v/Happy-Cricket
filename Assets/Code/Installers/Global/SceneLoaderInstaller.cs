@@ -9,7 +9,7 @@ namespace Code.Installers.Global
 
         private void BindSceneLoader() =>
             Container
-                .BindInterfacesAndSelfTo<SceneLoader>()
+                .BindInterfacesAndSelfTo<SceneLoaderService>()
                 .AsSingle();
     }
 }

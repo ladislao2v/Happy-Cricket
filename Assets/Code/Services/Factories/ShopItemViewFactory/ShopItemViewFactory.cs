@@ -18,10 +18,11 @@ namespace Code.Services.Factories.ShopItemViewFactory
 
         public IShopItemView Create(ItemConfig config, bool isLock, Transform container)
         {
-            var view = _diContainer.InstantiatePrefabForComponent<ShopItemView>(_prefab, container);
+            var view = _diContainer
+                .InstantiatePrefabForComponent<ShopItemView>(_prefab, container);
             
             view.Construct(config, isLock);
-            view.transform.parent = container;
+            view.transform.SetParent(container);
 
             return view;
         }

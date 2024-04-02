@@ -10,12 +10,12 @@ namespace Code.StateMachine.States
         private readonly IStateMachine _stateMachine;
         private readonly IGameDataService _gameDataService;
         private readonly IAudioService _audioService;
-        private readonly SceneLoader _sceneLoader;
+        private readonly SceneLoaderService _sceneLoader;
 
         public SaveDataState(IStateMachine stateMachine, 
             IGameDataService gameDataService, 
             IAudioService audioService, 
-            SceneLoader sceneLoader)
+            SceneLoaderService sceneLoader)
         {
             _stateMachine = stateMachine;
             _gameDataService = gameDataService;

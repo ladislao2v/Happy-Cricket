@@ -3,16 +3,19 @@ using System.Collections;
 using Code.Services.CoroutineRunner;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Code.Services.SceneLoaderService
 {
-    public class SceneLoader : ISceneLoaderService
+    public class SceneLoaderService : ISceneLoaderService
     {
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly ZenjectSceneLoader _zenjectSceneLoader;
 
-        public SceneLoader(ICoroutineRunner coroutineRunner)
+        public SceneLoaderService(ICoroutineRunner coroutineRunner, ZenjectSceneLoader zenjectSceneLoader)
         {
             _coroutineRunner = coroutineRunner;
+            _zenjectSceneLoader = zenjectSceneLoader;
         }
         
         public void Load(string name, Action loaded = null)
@@ -24,17 +27,7 @@ namespace Code.Services.SceneLoaderService
         {
             var activeScene = SceneManager.GetActiveScene();
 
-            SceneManager.LoadScene(activeScene.name);
-        }
-
-        private IEnumerator LoadScene(string name, Action loaded)
-        {
-            AsyncOperation waitSceneLoading = SceneManager.LoadSceneAsync(name);
-
-            while (!waitSceneLoading.isDone)
-                yield return null;
-            
-            loaded?.Invoke();
+            _zenjectSceneLoader.LoadScene(activeScene.name);
         }
     }
 }

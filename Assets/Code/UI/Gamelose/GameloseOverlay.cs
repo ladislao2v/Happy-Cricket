@@ -42,10 +42,12 @@ namespace Code.UI.Gamelose
             {
                 _win.SetActive(true);
                 _walletService.Add(_scoreService.Score);
+                Debug.Log("WIN!!!");
             }
             else
             {
                 _lose.SetActive(true);
+                Debug.Log("LOSE(((");
             }
             
             _statsService.AddMatchWin();

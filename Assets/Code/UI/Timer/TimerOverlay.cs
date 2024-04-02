@@ -8,6 +8,7 @@ namespace Code.UI.Timer
 {
     public class TimerOverlay : Overlay
     {
+        [SerializeField] private GameObject _background;
         [SerializeField] private CustomButton _readyButton;
         [SerializeField] private TimerView _timerView;
         
@@ -23,6 +24,7 @@ namespace Code.UI.Timer
 
         private void OnEnable()
         {
+            _background.SetActive(false);
             _readyButton.gameObject.SetActive(true);
             _timerView.gameObject.SetActive(false);
             

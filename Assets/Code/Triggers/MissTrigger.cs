@@ -43,10 +43,16 @@ namespace Code.Triggers
             _statsService.AddMissedCount();
 
             if (_scoreService.CurrentThrow == 3)
+            {
                 _halfView.gameObject.SetActive(true);
-            
-            if(_scoreService.CurrentThrow != 3 && _scoreService.CurrentThrow != 6)
-                _stateMachine.Enter<PitcherThrowState>();
+                Debug.Log("Half after miss");
+                return;
+            }
+
+            if(_scoreService.CurrentThrow == 6)
+                return;
+
+            _stateMachine.Enter<PitcherThrowState>();
         }
     }
 }
