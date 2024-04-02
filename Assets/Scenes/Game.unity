@@ -6055,7 +6055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fda31c6501738c4e9eaada2970f9e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 72a7455be8632ed42b86201984c54311, type: 3}
   _button: {fileID: 549388690}
 --- !u!1 &567531425
 GameObject:
